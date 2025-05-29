@@ -5,8 +5,8 @@ import { PanelLeftIcon } from "lucide-react"
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import Button from "@/components/ui/button"
+import Input from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import {
   Sheet,
@@ -22,6 +22,126 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+
+const sidebarVariants = cva(
+  "group peer text-sidebar-foreground hidden md:block",
+  {
+    variants: {
+      variant: {
+        sidebar: "",
+        floating: "p-2",
+        inset: "p-2",
+      },
+      side: {
+        left: "",
+        right: "",
+      },
+      collapsible: {
+        offcanvas: "",
+        icon: "",
+        none: "",
+      },
+      state: {
+        expanded: "",
+        collapsed: "",
+      }
+    },
+    compoundVariants: [
+      {
+        variant: ["floating", "inset"],
+        collapsible: "icon",
+        className: "w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]"
+      },
+      {
+        variant: "sidebar",
+        collapsible: "icon",
+        className: "w-(--sidebar-width-icon)"
+      },
+      {
+        variant: "sidebar",
+        side: "left",
+        className: "border-r"
+      },
+      {
+        variant: "sidebar",
+        side: "right",
+        className: "border-l"
+      }
+    ],
+    defaultVariants: {
+      variant: "sidebar",
+      side: "left",
+      collapsible: "offcanvas",
+      state: "expanded",
+    },
+  }
+);
+
+const sidebarContentVariants = cva(
+  "fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex",
+  {
+    variants: {
+      variant: {
+        sidebar: "",
+        floating: "p-2",
+        inset: "p-2",
+      },
+      side: {
+        left: "left-0",
+        right: "right-0",
+      },
+      collapsible: {
+        offcanvas: "",
+        icon: "",
+        none: "",
+      },
+      state: {
+        expanded: "",
+        collapsed: "",
+      }
+    },
+    compoundVariants: [
+      {
+        variant: ["floating", "inset"],
+        collapsible: "icon",
+        className: "w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]"
+      },
+      {
+        variant: "sidebar",
+        collapsible: "icon",
+        className: "w-(--sidebar-width-icon)"
+      },
+      {
+        variant: "sidebar",
+        side: "left",
+        className: "border-r"
+      },
+      {
+        variant: "sidebar",
+        side: "right",
+        className: "border-l"
+      },
+      {
+        side: "left",
+        collapsible: "offcanvas",
+        state: "collapsed",
+        className: "left-[calc(var(--sidebar-width)*-1)]"
+      },
+      {
+        side: "right",
+        collapsible: "offcanvas",
+        state: "collapsed",
+        className: "right-[calc(var(--sidebar-width)*-1)]"
+      }
+    ],
+    defaultVariants: {
+      variant: "sidebar",
+      side: "left",
+      collapsible: "offcanvas",
+      state: "expanded",
+    },
+  }
+);
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -161,7 +281,7 @@ function Sidebar({
   variant?: "sidebar" | "floating" | "inset"
   collapsible?: "offcanvas" | "icon" | "none"
 }) {
-  const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
+  const { isMobile, state } = useSidebar()
 
   if (collapsible === "none") {
     return (
@@ -179,33 +299,23 @@ function Sidebar({
   }
 
   if (isMobile) {
-    return (
-      <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
-        <SheetHeader className="sr-only">
-          <SheetTitle>Sidebar</SheetTitle>
-          <SheetDescription>Displays the mobile sidebar.</SheetDescription>
-        </SheetHeader>
-        <SheetContent
-          data-sidebar="sidebar"
-          data-slot="sidebar"
-          data-mobile="true"
-          className="bg-sidebar text-sidebar-foreground w-(--sidebar-width) p-0 [&>button]:hidden"
-          style={
-            {
-              "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
-            } as React.CSSProperties
-          }
-          side={side}
-        >
-          <div className="flex h-full w-full flex-col">{children}</div>
-        </SheetContent>
-      </Sheet>
-    )
+    return <MobileSidebar side={side} {...props}>{children}</MobileSidebar>;
   }
 
+  return <DesktopSidebar side={side} variant={variant} collapsible={collapsible} className={className} {...props}>{children}</DesktopSidebar>;
+}
+
+type DesktopSidebarProps = React.ComponentProps<"div"> & {
+  side?: "left" | "right"
+  variant?: "sidebar" | "floating" | "inset"
+  collapsible?: "offcanvas" | "icon" | "none"
+}
+
+function DesktopSidebar({ className, children, side, variant, collapsible, ...props }: DesktopSidebarProps) {
+  const { state } = useSidebar()
   return (
     <div
-      className="group peer text-sidebar-foreground hidden md:block"
+      className={cn(sidebarVariants({ variant, side, collapsible: state === "collapsed" ? collapsible : undefined, state }), className)}
       data-state={state}
       data-collapsible={state === "collapsed" ? collapsible : ""}
       data-variant={variant}
@@ -224,17 +334,7 @@ function Sidebar({
         )}
       />
       <div
-        className={cn(
-          "fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex",
-          side === "left"
-            ? "left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]"
-            : "right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]",
-          // Adjust the padding for floating and inset variants.
-          variant === "floating" || variant === "inset"
-            ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]"
-            : "group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r group-data-[side=right]:border-l",
-          className
-        )}
+        className={cn(sidebarContentVariants({ variant, side, collapsible: state === "collapsed" ? collapsible : undefined, state }), className)}
         {...props}
       >
         <div
@@ -245,6 +345,36 @@ function Sidebar({
         </div>
       </div>
     </div>
+  )
+}
+
+type MobileSidebarProps = React.ComponentProps<"div"> & {
+  side?: "left" | "right"
+}
+
+function MobileSidebar({ className, children, side, ...props }: MobileSidebarProps) {
+  const { openMobile, setOpenMobile } = useSidebar()
+  return (
+    <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
+      <SheetHeader className="sr-only">
+        <SheetTitle>Sidebar</SheetTitle>
+        <SheetDescription>Displays the mobile sidebar.</SheetDescription>
+      </SheetHeader>
+      <SheetContent
+        data-sidebar="sidebar"
+        data-slot="sidebar"
+        data-mobile="true"
+        className="bg-sidebar text-sidebar-foreground w-(--sidebar-width) p-0 [&>button]:hidden"
+        style={
+          {
+            "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
+          } as React.CSSProperties
+        }
+        side={side}
+      >
+        <div className="flex h-full w-full flex-col">{children}</div>
+      </SheetContent>
+    </Sheet>
   )
 }
 

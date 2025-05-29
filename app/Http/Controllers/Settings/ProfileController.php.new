@@ -1,0 +1,3 @@
+<?php
+
+// This is a new ProfileController that will use the ProfileService.
