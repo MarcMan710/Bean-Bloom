@@ -49,7 +49,7 @@ const Events: React.FC = () => {
     return (
         <Layout>
             <div className="max-w-4xl mx-auto">
-                <h1 className="text-4xl font-handwriting text-center mb-12">Upcoming Events</h1>
+                <h1 className="text-4xl font-handwriting text-center mb-12 text-gray-800">Upcoming Events</h1>
 
                 {/* Events List */}
                 <div className="space-y-8">
@@ -57,7 +57,7 @@ const Events: React.FC = () => {
                         <div key={event.id} className="bg-white rounded-lg shadow-md overflow-hidden">
                             <div className="p-6">
                                 <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                                    <h2 className="text-2xl font-handwriting">{event.title}</h2>
+                                    <h2 className="text-2xl font-handwriting text-gray-800">{event.title}</h2>
                                     <div className="mt-2 md:mt-0 text-[#4A3C31]">
                                         <p className="font-medium">{event.date}</p>
                                         <p>{event.time}</p>
@@ -79,7 +79,7 @@ const Events: React.FC = () => {
 
                 {/* Calendar Section */}
                 <div className="mt-12 bg-white rounded-lg shadow-md p-6">
-                    <h2 className="text-2xl font-handwriting mb-6">Event Calendar</h2>
+                    <h2 className="text-2xl font-handwriting mb-6 text-gray-800">Event Calendar</h2>
                     <div className="aspect-w-16 aspect-h-9">
                         <iframe
                             src="https://calendar.google.com/calendar/embed?src=beanandbloom%40gmail.com&showTitle=0&showNav=1&showPrint=0&showTabs=1&showCalendars=0&showTz=0"
@@ -93,12 +93,12 @@ const Events: React.FC = () => {
                 </div>
 
                 {/* Host Your Event */}
-                <div className="mt-12 bg-[#4A3C31] text-white rounded-lg p-8">
-                    <h2 className="text-2xl font-handwriting mb-4">Host Your Event</h2>
-                    <p className="mb-6">
+                <div className="mt-12 bg-white rounded-lg p-8">
+                    <h2 className="text-2xl font-handwriting mb-4 text-gray-800">Host Your Event</h2>
+                    <p className="mb-6 text-gray-800">
                         Want to host your own event at Bean & Bloom? We offer a cozy space for:
                     </p>
-                    <ul className="list-disc list-inside mb-6">
+                    <ul className="list-disc list-inside mb-6 text-gray-800">
                         <li>Book clubs and reading groups</li>
                         <li>Art workshops and exhibitions</li>
                         <li>Small business meetings</li>
@@ -106,7 +106,7 @@ const Events: React.FC = () => {
                     </ul>
                     <a
                         href="mailto:events@beanandbloom.com"
-                        className="inline-block bg-white hover:bg-gray-100 text-[#4A3C31] px-6 py-2 rounded-full transition-colors"
+                        className="inline-block bg-[#4A3C31] hover:bg-[#3A2C21] text-white px-6 py-2 rounded-full transition-colors"
                     >
                         Contact Us
                     </a>

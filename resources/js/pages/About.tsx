@@ -59,23 +59,23 @@ const About: React.FC = () => {
             <div className="max-w-4xl mx-auto">
                 {/* Our Story Section */}
                 <div className="mb-16">
-                    <h1 className="text-4xl font-handwriting text-center mb-8">Our Story</h1>
+                    <h1 className="text-4xl font-handwriting text-center mb-8 text-gray-800">Our Story</h1>
                     <div className="bg-white rounded-lg shadow-md p-8">
                         <div className="prose max-w-none">
-                            <p className="text-lg mb-6">
+                            <p className="text-lg mb-6 text-gray-800">
                                 Bean & Bloom began as a dream to create a community space where people could gather,
                                 connect, and enjoy exceptional coffee. Founded in 2020, our coffee shop has grown
                                 from a small local spot to a beloved neighborhood destination.
                             </p>
-                            <p className="text-lg mb-6">
+                            <p className="text-lg mb-6 text-gray-800">
                                 We believe in more than just serving great coffee. Our commitment to sustainability,
                                 ethical sourcing, and community engagement sets us apart. Every cup we serve
                                 represents our dedication to quality and our passion for creating meaningful
                                 connections.
                             </p>
-                            <p className="text-lg">
+                            <p className="text-lg text-gray-800">
                                 From our carefully selected beans to our house-made pastries, every detail is
-                                crafted with care and attention. We're proud to be part of this community and
+                                crafted with care and attention. We\'re proud to be part of this community and
                                 look forward to serving you for years to come.
                             </p>
                         </div>
@@ -84,7 +84,7 @@ const About: React.FC = () => {
 
                 {/* Team Section */}
                 <div className="mb-16">
-                    <h2 className="text-3xl font-handwriting text-center mb-8">Meet Our Team</h2>
+                    <h2 className="text-3xl font-handwriting text-center mb-8 text-gray-800">Meet Our Team</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {teamMembers.map((member) => (
                             <div key={member.name} className="bg-white rounded-lg shadow-md overflow-hidden">
@@ -96,8 +96,8 @@ const About: React.FC = () => {
                                     />
                                 </div>
                                 <div className="p-6">
-                                    <h3 className="text-xl font-handwriting mb-2">{member.name}</h3>
-                                    <p className="text-[#4A3C31] font-medium mb-4">{member.role}</p>
+                                    <h3 className="text-xl font-handwriting mb-2 text-gray-800">{member.name}</h3>
+                                    <p className="text-gray-800 font-medium mb-4">{member.role}</p>
                                     <p className="text-gray-600">{member.bio}</p>
                                 </div>
                             </div>
@@ -107,13 +107,13 @@ const About: React.FC = () => {
 
                 {/* Testimonials Section */}
                 <div className="mb-16">
-                    <h2 className="text-3xl font-handwriting text-center mb-8">What Our Customers Say</h2>
+                    <h2 className="text-3xl font-handwriting text-center mb-8 text-gray-800">What Our Customers Say</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {testimonials.map((testimonial) => (
                             <div key={testimonial.author} className="bg-white rounded-lg shadow-md p-6">
                                 <p className="text-gray-600 italic mb-4">"{testimonial.quote}"</p>
                                 <div>
-                                    <p className="font-medium">{testimonial.author}</p>
+                                    <p className="font-medium text-gray-800">{testimonial.author}</p>
                                     <p className="text-sm text-gray-500">{testimonial.role}</p>
                                 </div>
                             </div>
@@ -122,20 +122,20 @@ const About: React.FC = () => {
                 </div>
 
                 {/* Values Section */}
-                <div className="bg-[#4A3C31] text-white rounded-lg p-8">
-                    <h2 className="text-3xl font-handwriting text-center mb-8">Our Values</h2>
+                <div className="bg-white rounded-lg p-8">
+                    <h2 className="text-3xl font-handwriting text-center mb-8 text-gray-800">Our Values</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <div className="text-center">
-                            <h3 className="text-xl font-handwriting mb-4">Quality</h3>
-                            <p>We source the finest beans and ingredients to ensure every cup is perfect.</p>
+                            <h3 className="text-xl font-handwriting mb-4 text-gray-800">Quality</h3>
+                            <p className="text-gray-800">We source the finest beans and ingredients to ensure every cup is perfect.</p>
                         </div>
                         <div className="text-center">
-                            <h3 className="text-xl font-handwriting mb-4">Sustainability</h3>
-                            <p>We're committed to eco-friendly practices and ethical sourcing.</p>
+                            <h3 className="text-xl font-handwriting mb-4 text-gray-800">Sustainability</h3>
+                            <p className="text-gray-800">We\'re committed to eco-friendly practices and ethical sourcing.</p>
                         </div>
                         <div className="text-center">
-                            <h3 className="text-xl font-handwriting mb-4">Community</h3>
-                            <p>We create a welcoming space where everyone feels at home.</p>
+                            <h3 className="text-xl font-handwriting mb-4 text-gray-800">Community</h3>
+                            <p className="text-gray-800">We create a welcoming space where everyone feels at home.</p>
                         </div>
                     </div>
                 </div>

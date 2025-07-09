@@ -218,7 +218,7 @@
 }
 
 .text-cream {
-    color: #F5F5F0;
+    color: var(--foreground);
 }
 
 .bg-accent {
